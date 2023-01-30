@@ -2,16 +2,16 @@ import random
 
 verbeList = [
 #   ["EN_Présent","EN_Prétérite","EN_ParticipePassé","FR_Infinitif"],
-    ["win","won","won","gagner"],
-    ["beat","beat","beaten","battre"],
-    ["become","became","become","devenir"],
-    ["come","came","come","venir"],
-    ["run","ran","run","courrir"],
-    ["awake","awoke","awoken","se réveiller"],
-    ["be","was/were","been","être"],
-    ["bear","bore","borne","supporter"],
-    ["begin","began","begun","commencer"],
-    ["bite","bot","bitten","mordre"]
+    ["blow","blew","blown","souffler"],
+    ["break","broke","broken","casser"],
+    ["choose","chose","chosen","choisir"],
+    ["do","did","done","faire"],
+    ["draw","drew","drawn","dessiner"],
+    ["drink","drank","drunk","boire"],
+    ["drive","drove","driven","conduire"],
+    ["eat","ate","eaten","manger"],
+    ["fall","fell","fallen","tomber"],
+    ["fly","flew","flown","voler"]
 ]
 
 vocabularyList = [
@@ -23,8 +23,10 @@ vocabularyList = [
     ["second amendment rights","les droits relatifs au port d'armes"],
 ]
 
+getOtherNb = {0:1}
+
 def randVerb():
-        nb = random.randint(1,len(verbeList))
+        nb = random.randint(0,len(verbeList)-1)
         nbform = random.randint(1,4)
         if nbform == 1:
             verbe = (verbeList[nb][0]+" _____ "+" _____ "+" _____ ")
@@ -38,7 +40,11 @@ def randVerb():
         return [verbe,verbeList[nb]]
 
 def randVoc():
-    nb = random.randint(1,len(vocabularyList))
+    nb = random.randint(0,len(vocabularyList)-1)
+    nbForm = random.randint(0,1)
+    word = vocabularyList[nb][nbForm]
+    correctWord = vocabularyList[nb][getOtherNb[nbForm]]
+    return # [mot, correct]
     
 
 print("Pour stopper le programme, entrer la commande \"stop\"")
@@ -46,7 +52,7 @@ print("Pour stopper le programme, entrer la commande \"stop\"")
 choice = None
 while True:
     print("Que voulez vous travailler ?")
-    choice = input("Verbes, Vocabulaire")
+    choice = input("Verbes, Vocabulaire\n")
     if choice.lower() == "verbe":
         while True:
             verbe, correct = randVerb()
@@ -58,16 +64,19 @@ while True:
                 break
             else:
                 print("Wrong, the right answer is : "+str(correct))
-        
-        
-    elif choice.lower == "vocabulaire":
+                
+    if choice.lower == "vocabulaire":
         while True:
-            
-            userInput = input(verbe).lower()
-            if correct == userInput.split(""):
+            vocWord, correct = randVoc()
+            userInput = input(vocWord).lower()
+            if correct == userInput:
                 print("Great Job !")
             elif userInput == "stop":
                 print("Stopping...")
                 break
             else:
                 print("Wrong, the right answer is : "+str(correct))
+    
+    if choice == "stop":
+            print("Stopping...")
+            break
