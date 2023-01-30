@@ -20,11 +20,10 @@ vocabularyList = [
     ["reward","récompense"],
     ["travel","voyager"],
     ["les pays bas","the netherlands"],
-    ["second amendment rights","les droits relatifs au port d'armes"],
+    ["second amendment rights","les droits relatifs au port d'armes"]
 ]
 
-getOtherNb = {0:1}
-
+#Choisis un verbe au hasard parmis la liste verbeList et le renvois avec sa correction
 def randVerb():
         nb = random.randint(0,len(verbeList)-1)
         nbform = random.randint(1,4)
@@ -39,15 +38,16 @@ def randVerb():
         print("")
         return [verbe,verbeList[nb]]
 
+#Choisis un mot de vocabulaire au hasard parmis la liste vocabularyList et le renvois avec sa correction
 def randVoc():
     nb = random.randint(0,len(vocabularyList)-1)
     nbForm = random.randint(0,1)
     word = vocabularyList[nb][nbForm]
-    correctWord = vocabularyList[nb][getOtherNb[nbForm]]
-    return # [mot, correct]
+    correctWord = vocabularyList[nb][abs(nbForm-1)]
+    return word, correctWord
     
 
-print("Pour stopper le programme, entrer la commande \"stop\"")
+print("Pour stopper le programme, entrer la commande \"!stop\"")
 
 choice = None
 while True:
@@ -59,24 +59,24 @@ while True:
             userInput = input(verbe).lower()
             if correct == userInput.split(" "):
                 print("Great Job !")
-            elif userInput == "stop":
+            elif userInput == "!stop":
                 print("Stopping...")
                 break
             else:
                 print("Wrong, the right answer is : "+str(correct))
                 
-    if choice.lower == "vocabulaire":
+    if choice.lower() == "vocabulaire":
         while True:
             vocWord, correct = randVoc()
             userInput = input(vocWord).lower()
             if correct == userInput:
                 print("Great Job !")
-            elif userInput == "stop":
+            elif userInput == "!stop":
                 print("Stopping...")
                 break
             else:
                 print("Wrong, the right answer is : "+str(correct))
     
-    if choice == "stop":
+    if choice == "!stop":
             print("Stopping...")
             break
