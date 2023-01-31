@@ -47,13 +47,14 @@ def randVoc():
     return word, correctWord
     
 
-print("Pour stopper le programme, entrer la commande \"!stop\"")
+print("Pour retourner en arrière ou stopper le programme, entrer la commande \"!stop\"")
 
 choice = None
+
 while True:
     print("Que voulez vous travailler ?")
     choice = input("Verbes, Vocabulaire\n")
-    if choice.lower() == "verbe":
+    if choice.lower() in ["verbe","verbes"]:
         while True:
             verbe, correct = randVerb()
             userInput = input(verbe).lower()
@@ -65,7 +66,7 @@ while True:
             else:
                 print("Wrong, the right answer is : "+str(correct))
                 
-    if choice.lower() == "vocabulaire":
+    if choice.lower() in ["vocabulaire","voc","vocabulary"]:
         while True:
             vocWord, correct = randVoc()
             userInput = input(vocWord).lower()
