@@ -96,27 +96,12 @@ correct = None
 
 WidgetList = []
 
-#Verbes
-prst = Entry(window, width=10)
-pret = Entry(window, width=10)
-partp = Entry(window, width=10)
-french = Entry(window, width=10)
-
 #Boutons
 def ExitBtn():
     if runningProgram:
         window.destroy()
     else:
         TitleScreen()
-def SubmitBtn():
-    try:
-
-        if correct == [prst.get(), pret.get(), partp.get(), french.get()]:
-            ResultScreen("Great Job !")
-        else:
-            ResultScreen("Wrong, the right answer is "+ correct[0] + " / "+correct[1] + " / " + correct[2] + " / "+correct[3])
-    except:
-        print("Error, Missing Verb")
 def ClearScreen():
     for widget in window.winfo_children():
         widget.destroy()
@@ -161,23 +146,48 @@ def VerbScreen():
     runningProgram = True
     ClearScreen()
 
+    def SubmitBtn():
+        try:
+
+            if correct == [prst.get(), pret.get(), partp.get(), french.get()]:
+                ResultScreen("Great Job !", "verbe")
+            else:
+                ResultScreen(
+                    ("Wrong, the right answer is " + correct[0] + " / " + correct[1] + " / " + correct[2] + " / " +
+                    correct[3]),"verbe")
+        except:
+            print("Error, Missing Verb")
+
     verbe, correct = randVerb()
 
     Label(window, text=verbe.lower(), font=100).place(rely=0.5, relx=0.5, anchor=CENTER)
+    prst = Entry(window, width=10)
+    pret = Entry(window, width=10)
+    partp = Entry(window, width=10)
+    french = Entry(window, width=10)
+    Button(window, text="Submit", command=SubmitBtn).place(rely=0.7, relx=0.5, anchor=CENTER)
+
     prst.place(rely=0.6, relx=0.4, anchor=CENTER)
     pret.place(rely=0.6, relx=0.4667, anchor=CENTER)
     partp.place(rely=0.6, relx=0.5333, anchor=CENTER)
     french.place(rely=0.6, relx=0.6, anchor=CENTER)
-    Button(window, text="Submit", command=SubmitBtn).place(rely=0.7, relx=0.5, anchor=CENTER)
 
 def VocScreen():
     runningProgram = True
     ClearScreen()
     Label(window, text="Voc1", font=100).place(rely=0.5, relx=0.5, anchor=CENTER)
-def ResultScreen(str):
+def ResultScreen(str, last):
     runningProgram = True
     ClearScreen()
     Label(window, text=str, font=100).place(rely=0.5, relx=0.5, anchor=CENTER)
+
+    def retry():
+        if last == "verbe":
+            VerbScreen()
+        else:
+            VocScreen()
+
+    Button(window, text="Retry", command=retry).place(rely=0.05, relx=0.85)
 
 
 TitleScreen()
