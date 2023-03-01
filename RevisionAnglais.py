@@ -34,7 +34,6 @@ def randVerb():
             verbe =  (" _____ "+" _____ "+getVerbeList()[nb][2]+" _____ "+"\n")
         else:
             verbe =  (" _____ "+" _____ "+" _____ "+getVerbeList()[nb][3]+"\n")
-        print(getVerbeList())
         return [verbe,getVerbeList()[nb]]
 
 #Choisis un mot de vocabulaire au hasard parmis la liste vocabularyList et le renvois avec sa correction
@@ -82,14 +81,10 @@ def TitleScreen():
     def ChoiceBtn():
         # Starting Session
         if selected.get() == 1:
-            print("1")
             VerbScreen()
 
         elif selected.get() == 2:
-            print("2")
             VocScreen()
-        else:
-            print("0")
 
     WidgetList.append(Button(window, text="Let's start !", command=ChoiceBtn))
 
@@ -106,17 +101,12 @@ def VerbScreen():
     ClearScreen()
 
     def SubmitBtn():
-        try:
-
             if correct == [prst.get(), pret.get(), partp.get(), french.get()]:
                 ResultScreen("Great Job !", "verbe")
             else:
                 ResultScreen(
                     ("Wrong, the right answer is " + correct[0] + " / " + correct[1] + " / " + correct[2] + " / " +
                     correct[3]),"verbe")
-        except:
-            print("Error, Missing Verb")
-
     verbe, correct = randVerb()
 
     Label(window, text=verbe.lower(), font=100).place(rely=0.5, relx=0.5, anchor=CENTER)
@@ -136,15 +126,11 @@ def VocScreen():
     ClearScreen()
     Label(window, text="Voc1", font=100).place(rely=0.5, relx=0.5, anchor=CENTER)
     def SubmitBtn():
-        try:
-
             if correct == translated.get():
                 ResultScreen("Great Job !", "verbe")
             else:
                 ResultScreen(
                     ("Wrong, the right answer is " + correct),"voc")
-        except:
-            print("Error, Missing Word")
 
     word, correct = randVoc()
 

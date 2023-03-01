@@ -8,3 +8,5 @@ VerbePrésent : VerbePrétérite : VerbeParticipePassé : InfinitifFrançais
 
 Révisions Vocabulaire: 
 MotFr : MotEn
+
+Pour démarrer l'application, ouvrir le fichier Start.bat
