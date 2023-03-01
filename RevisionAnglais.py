@@ -4,96 +4,55 @@ import time
 from tkinter import *
 from tkinter.ttk import *
 
+def getVerbeList():
 
-verbeList = [
-#   ["EN_Présent","EN_Prétérite","EN_ParticipePassé","FR_Infinitif"],
-    ["have","had","had","avoir"],
-    ["go","went","gone","aller"],
-    ["begin","began","begun","commencer"],
-    ["drink","drank","drunk","boire"],
-    ["swim","swam","swum","nager"],
-    ["drive","drove","driven","conduire"],
-    ["ride","rode","riden","chevaucher"],
-    ["write","wrote","written","écrire"],
-    ["feel","felt","felt","ressentir"],
-    ["learn","learnt","learnt","apprendre"],
-]
+    open(r"verbeList.txt", "a")
+    with open(r"verbeList.txt", "r", encoding="utf-8") as f:
+        verbeList = []
+        for i in list(f.readlines()):
+            verbeList.append(i.replace("\n", "").split(" : "))
+    return verbeList
 
-vocabularyList = [
-#   ["MotEN","MotFR"],
-    ["gap year","année sabbatique"],
-    ["reward","récompense"],
-    ["travel","voyager"],
-    ["les pays bas","the netherlands"],
-    ["second amendment rights","les droits relatifs au port d'armes"]
-]
+def getVocList():
+
+    open(r"vocList.txt", "a")
+    with open(r"vocList.txt", "r", encoding="utf-8") as f:
+        vocList = []
+        for i in list(f.readlines()):
+            vocList.append(i.replace("\n", "").split(" : "))
+    return vocList
 
 #Choisis un verbe au hasard parmis la liste verbeList et le renvois avec sa correction
 def randVerb():
-        nb = random.randint(0,len(verbeList)-1)
+        nb = random.randint(0,len(getVerbeList())-1)
         nbform = random.randint(1,4)
         if nbform == 1:
-            verbe = (verbeList[nb][0]+" _____ "+" _____ "+" _____ "+"\n")
+            verbe = (getVerbeList()[nb][0]+" _____ "+" _____ "+" _____ "+"\n")
         elif nbform == 2:
-            verbe =  (" _____ "+verbeList[nb][1]+" _____ "+" _____ "+"\n")
+            verbe =  (" _____ "+getVerbeList()[nb][1]+" _____ "+" _____ "+"\n")
         elif nbform == 3:
-            verbe =  (" _____ "+" _____ "+verbeList[nb][2]+" _____ "+"\n")
+            verbe =  (" _____ "+" _____ "+getVerbeList()[nb][2]+" _____ "+"\n")
         else:
-            verbe =  (" _____ "+" _____ "+" _____ "+verbeList[nb][3]+"\n")
-        return [verbe,verbeList[nb]]
+            verbe =  (" _____ "+" _____ "+" _____ "+getVerbeList()[nb][3]+"\n")
+        print(getVerbeList())
+        return [verbe,getVerbeList()[nb]]
 
 #Choisis un mot de vocabulaire au hasard parmis la liste vocabularyList et le renvois avec sa correction
 def randVoc():
-    nb = random.randint(0,len(vocabularyList)-1)
+    nb = random.randint(0,len(getVocList())-1)
     nbForm = random.randint(0,1)
-    word = vocabularyList[nb][nbForm]
-    correctWord = vocabularyList[nb][abs(nbForm-1)]
+    word = getVocList()[nb][nbForm]
+    correctWord = getVocList()[nb][abs(nbForm-1)]
     return word, correctWord
-    
 
-print("Pour retourner en arrière ou stopper le programme, entrer la commande \"!stop\"")
-
-for i in range(1,1):
-    print("Que voulez vous travailler ?")
-    choice = input("Verbes, Vocabulaire\n")
-    if choice.lower() in ["verbe","verbes"]:
-        while True:
-            verbe, correct = randVerb()
-            userInput = input(verbe).lower()
-            if correct == userInput.split(" "):
-                print("Great Job !")
-            elif userInput == "!stop":
-                print("Stopping...")
-                break
-            else:
-                print("Wrong, the right answer is : "+str(correct))
-                
-    if choice.lower() in ["vocabulaire","voc","vocabulary"]:
-        while True:
-            vocWord, correct = randVoc()
-            userInput = input(vocWord).lower()
-            if correct == userInput:
-                print("Great Job !")
-            elif userInput == "!stop":
-                print("Stopping...")
-                break
-            else:
-                print("Wrong, the right answer is : "+str(correct))
-    
-    if choice == "!stop":
-            print("Stopping...")
-            break
-
-# FINAL :
+# INTERFACE :
 
 window = Tk()
 window.title("Revisions Anglais")
-window.attributes("-fullscreen", False)
+window.geometry("1000x600")
 
 runningProgram = False
-
 correct = None
-
 WidgetList = []
 
 #Boutons
@@ -176,6 +135,24 @@ def VocScreen():
     runningProgram = True
     ClearScreen()
     Label(window, text="Voc1", font=100).place(rely=0.5, relx=0.5, anchor=CENTER)
+    def SubmitBtn():
+        try:
+
+            if correct == translated.get():
+                ResultScreen("Great Job !", "verbe")
+            else:
+                ResultScreen(
+                    ("Wrong, the right answer is " + correct),"voc")
+        except:
+            print("Error, Missing Word")
+
+    word, correct = randVoc()
+
+    Label(window, text=word.lower(), font=100).place(rely=0.5, relx=0.5, anchor=CENTER)
+    translated = Entry(window, width=10)
+    Button(window, text="Submit", command=SubmitBtn).place(rely=0.7, relx=0.5, anchor=CENTER)
+
+    translated.place(rely=0.6, relx=0.5, anchor=CENTER)
 def ResultScreen(str, last):
     runningProgram = True
     ClearScreen()

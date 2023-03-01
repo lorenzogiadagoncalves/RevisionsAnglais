@@ -1,0 +1,10 @@
+have : had : had : avoir
+go : went : gone : aller
+begin : began : begun : commencer
+drink : drank : drunk : boire
+swim : swam : swum : nager
+drive : drove : driven : conduire
+ride : rode : riden : chevaucher
+write : wrote : written : écrire
+feel : felt : felt : ressentir
+learn : learnt : learnt : apprendre
