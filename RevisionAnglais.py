@@ -4,6 +4,9 @@ import time
 from tkinter import *
 from tkinter.ttk import *
 
+import webbrowser
+
+
 def getVerbeList():
 
     open(r"verbeList.txt", "a")
@@ -87,6 +90,11 @@ def TitleScreen():
             VocScreen()
 
     WidgetList.append(Button(window, text="Let's start !", command=ChoiceBtn))
+
+    def BugReportBtn():
+        webbrowser.open('https://github.com/lorenzogiadagoncalves/RevisionsAnglais/issues')
+
+    Button(window, text="report a bug", command=BugReportBtn).place(rely=0.9, relx=0.9, anchor=CENTER)
 
     # Affichage
     MainScreen = [0.4, 0.6]
